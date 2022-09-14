@@ -9,7 +9,7 @@ Item* Room::GetItem(ItemType itemType)
 {
 	for (auto entity : contains) {
 		if (entity->type == ITEM) {
-			Item* item = (Item*)item;
+			Item* item = (Item*)entity;
 			if (item->itemType == itemType) {
 				return item;
 			}
@@ -23,7 +23,7 @@ NPC* Room::TalkNPC()
 {
 	for (auto entity : contains) {
 		if (entity->type == NPC_CHARACTER) {
-			NPC* npc = (NPC*)npc;
+			NPC* npc = (NPC*)entity;
 			return npc;
 		}
 	}

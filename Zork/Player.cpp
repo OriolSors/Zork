@@ -1,4 +1,7 @@
 #include "Player.h"
+#include "NPC.h"
+#include "Room.h"
+#include "Item.h"
 #include <iostream>
 using namespace std;
 
@@ -15,13 +18,13 @@ void Player::Open(Room* destinationRoom)
 
 void Player::Pick(Item* item)
 {
-	this->contains.push_back(item);
+	item->ChangeParent(this);
 	cout << "You obtained " + item->name << endl;
 }
 
 void Player::Drop(ItemType itemType)
 {
-	string message = "You don't have ";
+	string message = "You don't have this item";
 	string itemName;
 	for (auto entity : contains) {
 		if (entity->type == ITEM) {
@@ -39,23 +42,34 @@ void Player::Drop(ItemType itemType)
 
 void Player::Rescue(NPC* npc)
 {
+	bool cardObtained = false;
+	bool keyObtained = false;
 	Item* itemAux = nullptr;
 	for (auto entity : contains) {
 		if (entity->type == ITEM) {
 			Item* item = (Item*)entity;
 			if (item->itemType == CARD) {
 				itemAux = item;
-				break;
+				cardObtained = true;
 			}
+			if (item->itemType == KEY) {
+				keyObtained = true;
+			}
+
+			if (cardObtained && keyObtained) break;
 		}
 	}
-	if (itemAux) {
+	if (itemAux && keyObtained) {
 		this->contains.remove(itemAux);
-		npc->Awake();
+		string npcMessage = npc->Awake();
+		cout << "Prisoner: " + npcMessage << endl;
 		cout << "You rescued the prisoner and give him his card" << endl;
 	}
-	else {
+	else if (keyObtained){
 		cout << "Mmmm... you don't know who is this guy... Is there any information out there?" << endl;
+	}
+	else {
+		cout << "Mmmm... you will need first a key" << endl;
 	}
 	
 	
@@ -63,8 +77,8 @@ void Player::Rescue(NPC* npc)
 
 void Player::Insert(ItemType item1, ItemType item2)
 {
-	Item* littleItem;
-	Item* bigItem;
+	Item* littleItem = nullptr;
+	Item* bigItem = nullptr;
 	for (auto entity : contains) {
 		if (entity->type == ITEM) {
 			Item* item = (Item*)entity;

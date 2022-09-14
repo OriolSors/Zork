@@ -1,9 +1,17 @@
-
+#pragma once
 #include <string>
 #include <list>
-#include "Item.h"
 using namespace std;
-
+enum EntityType
+{
+	ENTITY,
+	CREATURE,
+	NPC_CHARACTER,
+	PLAYER,
+	EXIT,
+	ROOM,
+	ITEM
+};
 class Entity
 {
 public:
@@ -21,14 +29,5 @@ public:
 
 };
 
-enum EntityType
-{
-	ENTITY,
-	CREATURE,
-	NPC_CHARACTER,
-	PLAYER,
-	EXIT,
-	ROOM,
-	ITEM
-};
+
 

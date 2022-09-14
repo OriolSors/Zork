@@ -1,6 +1,15 @@
 #pragma once
 #include "Entity.h"
-#include "Room.h"
+class Room;
+
+enum Direction
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+};
+
 class Exit :
     public Entity
 {
@@ -13,11 +22,5 @@ public:
 
 };
 
-enum Direction
-{
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST
-};
+
 

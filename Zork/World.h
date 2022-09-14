@@ -1,8 +1,10 @@
 #pragma once
 #include <vector>
-#include "Entity.h"
-#include "Player.h"
+
+class Entity;
+class Player;
 #include "Exit.h"
+
 using namespace std;
 class World
 {

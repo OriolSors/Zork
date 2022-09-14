@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
-#include "NPC.h"
+class NPC;
+#include "Item.h"
 class Room :
     public Entity
 {

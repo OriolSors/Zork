@@ -1,4 +1,8 @@
 #include "ActionManager.h"
+#include "World.h"
+#include "Player.h"
+#include "Room.h"
+#include "Item.h"
 #include <iostream>
 #include <sstream>
 ActionManager::ActionManager(World* world): world(world)
@@ -35,7 +39,7 @@ void ActionManager::SplitAction(string action)
 		else {
 			ErrorInputAction();
 		}
-
+		actionSplitted.clear();
 	}
 
 }
@@ -105,7 +109,7 @@ void ActionManager::Rescue()
 
 void ActionManager::Insert()
 {
-	if (actionSplitted.size() != 4) {
+	if (actionSplitted.size() != 3) {
 		ErrorLengthPredicate("insert", "3");
 	}
 	else {
@@ -123,7 +127,7 @@ void ActionManager::ErrorLengthPredicate(string action, string correctLength) {
 
 void ActionManager::GetItemFromString(string itemName) {
 	Room* currentRoom = (Room*)world->player->parent;
-	Item* itemRetrieved;
+	Item* itemRetrieved = nullptr;
 	if (itemName == "key") {
 		itemRetrieved = currentRoom->GetItem(ItemType::KEY);
 	}
@@ -136,6 +140,7 @@ void ActionManager::GetItemFromString(string itemName) {
 	
 	if (itemRetrieved) {
 		world->player->Pick(itemRetrieved);
+
 	}
 	else {
 		cout << "This item is not here" << endl;
@@ -159,6 +164,9 @@ void ActionManager::RescueNPC() {
 	NPC* npc = currentRoom->TalkNPC();
 	if (npc) {
 		world->player->Rescue(npc);
+	}
+	else {
+		cout << "This character is not here" << endl;
 	}
 }
 

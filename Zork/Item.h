@@ -1,6 +1,13 @@
 #pragma once
 #include "Entity.h"
-#include "Room.h"
+class Room;
+
+enum ItemType
+{
+    KEY_RING,
+    KEY,
+    CARD
+};
 class Item :
     public Entity
 {
@@ -10,10 +17,5 @@ public:
     ItemType itemType;
 };
 
-enum ItemType
-{
-	KEY_RING,
-    KEY,
-    CARD
-};
+
 

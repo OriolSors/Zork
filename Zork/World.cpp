@@ -10,7 +10,7 @@ World::World()
 
 	Room* room1 = new Room("Room 1", "You are at Room 1. There is nothing except a door in south direction.");
 	Room* room2 = new Room("Room 2", "You are at Room 2. You can see a card on the floor and doors to the east and north.");
-	Room* room3 = new Room("Room 3", "You are at Room 3. You can see a bag at the middle and doors to the north, south and west.");
+	Room* room3 = new Room("Room 3", "You are at Room 3. You can see a minibag at the middle and doors to the north, south and west.");
 	Room* room4 = new Room("Room 4", "You are at Room 4. You see a guy in a closed jail... And a door at north.");
 	Room* room5 = new Room("Room 5", "You are at Room 5. There is a key and an exit at north. Also you have a door at south.");
 
