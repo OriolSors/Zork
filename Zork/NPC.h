@@ -8,6 +8,6 @@ public:
 
     bool rescued = false;
 
-    void Awake();
+    string Awake();
 };
 

@@ -28,13 +28,13 @@ World::World()
 
 	Exit* exit5_out = new Exit("Outside door", "Fifth room to exit", room5, Direction::NORTH, NULL);
 
-	Player* player = new Player("Player", "You have to exit the house", room1);
+	player = new Player("Player", "You have to exit the house", room1);
 	NPC* npc = new NPC("Prisoner", "He is sleeping inside the bars", room4);
 	
 
-	Item* bag = new Item("Bag", "Now you can carry objects.", room3, ItemType::BAG);
-	Item* key = new Item("Key", "It seems like a prison key. I need to save it for not making noise...", room5, ItemType::KEY);
-	Item* card = new Item("Card", "It is an identity card. Is there someone here?", room2, ItemType::CARD);
+	Item* keyRing = new Item("minibag", "Now you can carry certain object.", room3, ItemType::KEY_RING);
+	Item* key = new Item("key", "It seems like a prison key. I need to save it properly...", room5, ItemType::KEY);
+	Item* card = new Item("card", "It is an identity card. Is there someone here?", room2, ItemType::CARD);
 
 	entities.push_back(room1);
 	entities.push_back(room2);
@@ -53,7 +53,7 @@ World::World()
 	entities.push_back(player);
 	entities.push_back(npc);
 	entities.push_back(npc);
-	entities.push_back(bag);
+	entities.push_back(keyRing);
 	entities.push_back(key);
 	entities.push_back(card);
 }
@@ -61,3 +61,19 @@ World::World()
 World::~World()
 {
 }
+
+Exit* World::GetExit(Room* source, Direction direction)
+{
+	for (auto entity : entities) {
+		if (entity->type == EXIT) {
+			Exit* exit = (Exit*)entity;
+			if (exit->source == source && exit->direction == direction) {
+				return exit;
+			}
+		}
+	}
+
+	return NULL;
+}
+
+

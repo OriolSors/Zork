@@ -4,3 +4,29 @@ Room::Room(const char* name, const char* description): Entity(name, description,
 {
 	type = EntityType::ROOM;
 }
+
+Item* Room::GetItem(ItemType itemType)
+{
+	for (auto entity : contains) {
+		if (entity->type == ITEM) {
+			Item* item = (Item*)item;
+			if (item->itemType == itemType) {
+				return item;
+			}
+		}
+	}
+
+	return NULL;
+}
+
+NPC* Room::TalkNPC()
+{
+	for (auto entity : contains) {
+		if (entity->type == NPC_CHARACTER) {
+			NPC* npc = (NPC*)npc;
+			return npc;
+		}
+	}
+
+	return NULL;
+}

@@ -12,10 +12,12 @@ public:
 
     void Pick(Item* item);
 
-    void Drop(Item* item);
+    void Drop(ItemType itemType);
 
     void Rescue(NPC* npc);
 
-    void Insert(Item* item1, Item* item2);
+    void Insert(ItemType item1, ItemType item2);
+
+    list<string> Inventory();
 };
 

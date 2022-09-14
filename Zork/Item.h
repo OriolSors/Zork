@@ -12,7 +12,7 @@ public:
 
 enum ItemType
 {
-	BAG,
+	KEY_RING,
     KEY,
     CARD
 };

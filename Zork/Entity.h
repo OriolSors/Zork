@@ -1,6 +1,7 @@
 
 #include <string>
 #include <list>
+#include "Item.h"
 using namespace std;
 
 class Entity
