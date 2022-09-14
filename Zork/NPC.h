@@ -5,5 +5,9 @@ class NPC :
 {
 public:
     NPC(const char* name, const char* description, Room* location);
+
+    bool rescued = false;
+
+    void Awake();
 };
 

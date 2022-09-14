@@ -1,6 +1,14 @@
 #include "NPC.h"
+#include <iostream>
 
 NPC::NPC(const char* name, const char* description, Room* location): Creature(name, description, location)
 {
-	entityType = EntityType::NPC_CHARACTER;
+	type = EntityType::NPC_CHARACTER;
+}
+
+string NPC::Awake()
+{
+	rescued = true;
+
+	return "Thank you!";
 }

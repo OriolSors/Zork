@@ -4,6 +4,6 @@ Exit::Exit(const char* name, const char* description, Room* source, Direction di
 	source(source), direction(direction), destination(destination)
 	
 {
-	entityType = EntityType::EXIT;
+	type = EntityType::EXIT;
 }
 

@@ -10,9 +10,11 @@ public:
 	string name;
 	string description;
 	list<Entity*> contains;
-	EntityType entityType;
+	EntityType type;
 	Entity* parent;
 
+
+	void ChangeParent(Entity* newParent);
 
 	virtual void Update();
 
