@@ -22,7 +22,7 @@ enum EntityType
 {
 	ENTITY,
 	CREATURE,
-	NPC,
+	NPC_CHARACTER,
 	PLAYER,
 	EXIT,
 	ROOM,

@@ -5,6 +5,15 @@ class Item :
     public Entity
 {
 public:
-    Item(const char* name, const char* description, Room* location);
+    Item(const char* name, const char* description, Room* location, ItemType itemType);
+
+    ItemType itemType;
+};
+
+enum ItemType
+{
+	BAG,
+    KEY,
+    CARD
 };
 

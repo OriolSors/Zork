@@ -5,7 +5,7 @@ class Exit :
     public Entity
 {
 public:
-	Exit(const char* name, const char* description, Room* source);
+	Exit(const char* name, const char* description, Room* source, Direction direction, Room* destination);
 
 	Room* source;
 	Direction direction;
@@ -15,9 +15,9 @@ public:
 
 enum Direction
 {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
 };
 
