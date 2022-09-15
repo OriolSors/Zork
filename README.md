@@ -49,4 +49,6 @@ There are 6 different input operations: "open", "pick", "drop", "rescue", "inser
 - open north
 
 ## Author
-Oriol Sors
+- Oriol Sors
+- Repository: https://github.com/OriolSors/Zork
+- License: MIT License
