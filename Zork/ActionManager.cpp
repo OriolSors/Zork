@@ -36,6 +36,9 @@ void ActionManager::SplitAction(string action)
 		else if (actionVerb == "insert") {
 			Insert();
 		}
+		else if (actionVerb == "inventory") {
+			Inventory();
+		}
 		else {
 			ErrorInputAction();
 		}
@@ -57,8 +60,11 @@ void ActionManager::Open()
 		if (exit && exit->destination) {
 			world->player->Open(exit->destination);
 		}
-		else if (exit && !exit->destination) {
-			//Check NPC rescued in GameManager and WIN or LOSE
+		else if (exit && !exit->destination && rescued) {
+			finishedGame = true;
+		}
+		else if (exit && !exit->destination && !rescued) {
+			cout << "Try to safe the poor guy first..." << endl;
 		}
 		else {
 			cout << "There is no door in this direction. Try again" << endl;
@@ -135,7 +141,7 @@ void ActionManager::GetItemFromString(string itemName) {
 		itemRetrieved = currentRoom->GetItem(ItemType::CARD);
 	}
 	else if (itemName == "minibag") {
-		itemRetrieved = currentRoom->GetItem(ItemType::KEY_RING);
+		itemRetrieved = currentRoom->GetItem(ItemType::MINIBAG);
 	}
 	
 	if (itemRetrieved) {
@@ -155,15 +161,18 @@ void ActionManager::DropItemFromString(string itemName) {
 		world->player->Drop(ItemType::CARD);
 	}
 	else if (itemName == "minibag") {
-		world->player->Drop(ItemType::KEY_RING);
+		world->player->Drop(ItemType::MINIBAG);
 	}
 }
 
 void ActionManager::RescueNPC() {
 	Room* currentRoom = (Room*)world->player->parent;
 	NPC* npc = currentRoom->TalkNPC();
-	if (npc) {
-		world->player->Rescue(npc);
+	if (npc && !rescued) {
+		world->player->Rescue(npc, this->rescued);
+	}
+	else if (rescued) {
+		cout << "This character is already rescued" << endl;
 	}
 	else {
 		cout << "This character is not here" << endl;
@@ -176,14 +185,33 @@ void ActionManager::InsertItemToItem(string item1, string item2)
 		cout << "You cannot place any object to " + item2 << endl;
 	}
 	else if (item1 == "key") {
-		world->player->Insert(ItemType::KEY, ItemType::KEY_RING);
+		world->player->Insert(ItemType::KEY, ItemType::MINIBAG);
 		
 	}
 	else if (item1 == "card") {
-		world->player->Insert(ItemType::CARD, ItemType::KEY_RING);
+		world->player->Insert(ItemType::CARD, ItemType::MINIBAG);
 	}else {
 		cout << "The " + item1 + " does not exist" << endl;
 	}
+}
+
+void ActionManager::Inventory()
+{
+	if (actionSplitted.size() != 1) {
+		ErrorLengthPredicate("inventory", "1");
+	}
+	else {
+		list<string> inventory = world->player->Inventory();
+		if (inventory.size() != 0) {
+			for (string item : inventory) {
+				cout << item << endl;
+			}
+		}
+		else {
+			cout << "You have no objects" << endl;
+		}
+	}
+	
 }
 
 Direction ActionManager::GetDirectionFromString(string direction) {

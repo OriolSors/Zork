@@ -19,7 +19,10 @@ void Player::Open(Room* destinationRoom)
 void Player::Pick(Item* item)
 {
 	item->ChangeParent(this);
-	cout << "You obtained " + item->name << endl;
+	cout << "You obtained " + item->name + ". " + item->description << endl;
+	if (item->itemType == ItemType::MINIBAG) {
+		minibag = item;
+	}
 }
 
 void Player::Drop(ItemType itemType)
@@ -37,13 +40,28 @@ void Player::Drop(ItemType itemType)
 			}
 		}
 	}
+	if (itemName == "" && minibag) {
+		for (auto item : minibag->contains) {
+			if (item->type == ITEM) {
+				Item* itemAux = (Item*)item;
+				if (itemAux->itemType == itemType) {
+					itemAux->ChangeParent(this->parent);
+					message = "You dropped ";
+					itemName = itemAux->name;
+					break;
+				}
+			}
+		}
+	}
 	cout << message + itemName << endl;
 }
 
-void Player::Rescue(NPC* npc)
+void Player::Rescue(NPC* npc, bool& rescued)
 {
 	bool cardObtained = false;
 	bool keyObtained = false;
+	bool cardObtainedInBag = false;
+	bool keyObtainedInBag = false;
 	Item* itemAux = nullptr;
 	for (auto entity : contains) {
 		if (entity->type == ITEM) {
@@ -56,14 +74,38 @@ void Player::Rescue(NPC* npc)
 				keyObtained = true;
 			}
 
+			if (item->itemType == MINIBAG) {
+				for (auto itemBag : minibag->contains) {
+					Item* itemBagAux = (Item*)itemBag;
+					if (itemBagAux->itemType == CARD) {
+						itemAux = itemBagAux;
+						cardObtainedInBag = true;
+						cardObtained = true;
+					}
+					if (itemBagAux->itemType == KEY) {
+						keyObtainedInBag = true;
+						keyObtained = true;
+					}
+
+					if (cardObtained && keyObtained) break;
+				}
+			}
+
 			if (cardObtained && keyObtained) break;
 		}
 	}
 	if (itemAux && keyObtained) {
-		this->contains.remove(itemAux);
+		if (cardObtainedInBag) {
+			this->minibag->contains.remove(itemAux);
+		}
+		else {
+			this->contains.remove(itemAux);
+		}
+		
 		string npcMessage = npc->Awake();
 		cout << "Prisoner: " + npcMessage << endl;
 		cout << "You rescued the prisoner and give him his card" << endl;
+		rescued = true;
 	}
 	else if (keyObtained){
 		cout << "Mmmm... you don't know who is this guy... Is there any information out there?" << endl;
@@ -82,10 +124,10 @@ void Player::Insert(ItemType item1, ItemType item2)
 	for (auto entity : contains) {
 		if (entity->type == ITEM) {
 			Item* item = (Item*)entity;
-			if (item->itemType = item1) {
+			if (item->itemType == item1) {
 				littleItem = item;
 			}
-			else if (item->itemType = item2) {
+			else if (item->itemType == item2) {
 				bigItem = item;
 			}
 		}
@@ -106,7 +148,18 @@ list<string> Player::Inventory()
 	for (auto entity : contains) {
 		if (entity->type == ITEM) {
 			Item* item = (Item*)entity;
-			items.push_back(item->name);
+			if (item->itemType != ItemType::MINIBAG) {
+				items.push_back(item->name);
+			}
+			else {
+				for (auto itemBag : minibag->contains) {
+					if (itemBag->type == ITEM) {
+						Item* itemBagAux = (Item*)itemBag;
+						items.push_back(itemBagAux->name + " (minibag)");
+					}
+				}
+			}
+			
 		}
 	}
 	return items;

@@ -8,11 +8,11 @@
 World::World()
 {
 
-	Room* room1 = new Room("Room 1", "You are at Room 1. There is nothing except a door in south direction.");
-	Room* room2 = new Room("Room 2", "You are at Room 2. You can see a card on the floor and doors to the east and north.");
-	Room* room3 = new Room("Room 3", "You are at Room 3. You can see a minibag at the middle and doors to the north, south and west.");
-	Room* room4 = new Room("Room 4", "You are at Room 4. You see a guy in a closed jail... And a door at north.");
-	Room* room5 = new Room("Room 5", "You are at Room 5. There is a key and an exit at north. Also you have a door at south.");
+	Room* room1 = new Room("Room 1", "You are at Ground floor. There is nothing except a light in south direction.");
+	Room* room2 = new Room("Room 2", "You are at Garden. You have Living room to the east and Ground floor at north.");
+	Room* room3 = new Room("Room 3", "You are at Living room. You can see an extra room to the north, a dark place at south and the Garden at west.");
+	Room* room4 = new Room("Room 4", "You are at Prison room. You see a jail... And a door at north.");
+	Room* room5 = new Room("Room 5", "You are at Exit room. There is the outside at north. Also you have a door at south.");
 
 	Exit* exit1_2 = new Exit("First door", "First room to Second room", room1, Direction::SOUTH, room2);
 	Exit* exit2_1 = new Exit("First door", "Second room to First room", room2, Direction::NORTH, room1);
@@ -32,7 +32,7 @@ World::World()
 	NPC* npc = new NPC("Prisoner", "He is sleeping inside the bars", room4);
 	
 
-	Item* keyRing = new Item("minibag", "Now you can carry certain object.", room3, ItemType::KEY_RING);
+	Item* keyRing = new Item("minibag", "Now you can carry certain object.", room3, ItemType::MINIBAG);
 	Item* key = new Item("key", "It seems like a prison key. I need to save it properly...", room5, ItemType::KEY);
 	Item* card = new Item("card", "It is an identity card. Is there someone here?", room2, ItemType::CARD);
 

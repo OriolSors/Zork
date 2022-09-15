@@ -4,7 +4,7 @@ class Room;
 
 enum ItemType
 {
-    KEY_RING,
+    MINIBAG,
     KEY,
     CARD
 };

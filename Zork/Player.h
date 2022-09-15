@@ -15,10 +15,12 @@ public:
 
     void Drop(ItemType itemType);
 
-    void Rescue(NPC* npc);
+    void Rescue(NPC* npc, bool& rescued);
 
     void Insert(ItemType item1, ItemType item2);
 
     list<string> Inventory();
+
+    Item* minibag;
 };
 
